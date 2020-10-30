@@ -41,6 +41,9 @@ const vm = new Vue({
         video: true,
         videoDimensions: {width: 640, height: 360}
       });
+      
+      const videoElement = localTrack.attach();
+      videoContainer.appendChild(videoElement);
     },
     createRoom: async function() {
       console.log("create room");
@@ -51,7 +54,8 @@ const vm = new Vue({
       this.roomId = room.roomId;
       this.roomToken = roomToken;
       
-      await login();
+      await this.login();
+      await this.publishVideo;
       
     },
     joinRoom: async function() {
