@@ -21,12 +21,22 @@
     <script src="https://cdn.stringee.com/sdk/web/2.2.1/stringee-web-sdk.min.js"></script>
   </head>
   <body>
-    <div class="container has-text-centered">
+    <div class="container has-text-centered" id="app">
       <h1 class="title">
         Ứng dụng Clone Zoom cực cool ngầu với
         <span class="header-highlight">Stringee API</span>
       </h1>
+      <span>{{roomId}}</span>
+      
+      <div>
+        <button class="button is-small is-primary">
+          Create Room
+        </button>
+        
+      </div>
     </div>
+    
+    
 
     <div class="container">
       <div id="videos"></div>
