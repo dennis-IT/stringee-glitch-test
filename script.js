@@ -9,6 +9,11 @@ const vm = new Vue({
     room: undefined,
     client: undefined
   },
+  computed: {
+    roomURL: function() {
+      return `https://${location.hostname}?room=${this.roomId}`;
+    }
+  },
   mounted() {
     api.setRestToken();
   },
@@ -66,21 +71,22 @@ const vm = new Vue({
         if (trackInfo.serverId === localTrack.serverId) {
           return;
         }
-        
+
         this.subscribeTrack(trackInfo);
-
-        room.on("removetrack", event => {
-          if (!event.track) {
-            return;
-          }
-
-          const elements = event.track.detach();
-          elements.forEach(element => element.remove());
-        });
-        
-        //Display all trackinfo in a room
-        roomData.listTracksInfo.forEach(trackInfo => this.subscribeTrack(trackInfo));
       });
+      room.on("removetrack", event => {
+        if (!event.track) {
+          return;
+        }
+
+        const elements = event.track.detach();
+        elements.forEach(element => element.remove());
+      });
+
+      //Display all trackinfo in a room
+      roomData.listTracksInfo.forEach(trackInfo =>
+        this.subscribeTrack(trackInfo)
+      );
 
       room.publish(localTrack);
     },
@@ -109,14 +115,14 @@ const vm = new Vue({
 
       await this.login();
       await this.publishVideo();
-    }
-  },
-  subscribeTrack: async function(trackInfo) {
-    const track = await room.subscribe(trackInfo.serverId);
+    },
+    subscribeTrack: async function(trackInfo) {
+      const track = await this.room.subscribe(trackInfo.serverId);
 
-    track.on("ready", () => {
-      const element = track.attach();
-      videoContainer.appendChild(element);
-    });
+      track.on("ready", () => {
+        const element = track.attach();
+        videoContainer.appendChild(element);
+      });
+    }
   }
 });
