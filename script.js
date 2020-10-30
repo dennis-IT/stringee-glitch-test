@@ -44,6 +44,13 @@ const vm = new Vue({
       
       const videoElement = localTrack.attach();
       videoContainer.appendChild(videoElement);
+      
+      //Start to join a room
+      const roomData = await StringeeVideo.joinRoom(this.client, this.roomToken);
+      
+      const room = roomData.room;
+      console.log({roomData, room});
+      this.room = room;
     },
     createRoom: async function() {
       console.log("create room");
@@ -55,7 +62,7 @@ const vm = new Vue({
       this.roomToken = roomToken;
       
       await this.login();
-      await this.publishVideo;
+      await this.publishVideo();
       
     },
     joinRoom: async function() {
@@ -68,6 +75,9 @@ const vm = new Vue({
       const roomToken = await api.getRoomToken(roomId);
       this.roomId = roomId;
       this.roomToken = roomToken;
+      
+      await this.login();
+      await this.publishVideo();
     }
   }
 });
