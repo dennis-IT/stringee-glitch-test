@@ -51,6 +51,22 @@ const vm = new Vue({
       const room = roomData.room;
       console.log({roomData, room});
       this.room = room;
+      
+      room.clearAllOnMethos();
+      room.on("addtrack", e => {
+        const trackInfo = e.info.track;
+        
+        if(trackInfo.serverId === localTrack.serverId) {
+          return;
+        }
+        
+        const track = await room.subscribe(track.serverId);
+        
+        track.on();
+        
+      })
+      
+      room.publish(localTrack);
     },
     createRoom: async function() {
       console.log("create room");
