@@ -11,6 +11,25 @@ const vm = new Vue({
     api.setRestToken()
   },
   methods: {
+    login: function() {
+      //Create a promise
+      return new Promise(async resolve );
+      
+      //Create a random userId
+      const userId = (Math.random() * 10000).toFixed(0);
+      
+      //Get user Token from userId
+      const userToken = await api.getUserToken(userId);
+      this.userToken = userToken;
+      
+      //Connect to stringee
+      const client = new StringeeClient();
+      client.on('authen', (result) => {
+        console.log('on authen', result);
+      });
+      
+      client.connect(userToken);
+    },
     createRoom: async function() {
       console.log('create room');
       const room = await api.createRoom();

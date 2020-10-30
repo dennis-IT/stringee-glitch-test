@@ -27,19 +27,19 @@
         <span class="header-highlight">Stringee API</span>
       </h1>
       <span>{{roomId}} {{roomToken}}</span>
-      
+
       <div>
+        <button class="button is-small is-primary" @click="login">
+          Login
+        </button>
         <button class="button is-small is-primary" @click="createRoom">
           Create Room
         </button>
-        <button class="button is-small is-warning" @click="joinRoom">
+        <button class="button is-small is-primary" @click="joinRoom">
           Join Room
         </button>
-        
       </div>
     </div>
-    
-    
 
     <div class="container">
       <div id="videos"></div>
