@@ -53,18 +53,33 @@ const vm = new Vue({
       this.room = room;
       
       room.clearAllOnMethos();
-      room.on("addtrack", e => {
-        const trackInfo = e.info.track;
+      
+      room.on("addtrack", async event => {
+        const trackInfo = event.info.track;
         
         if(trackInfo.serverId === localTrack.serverId) {
           return;
         }
         
-        const track = await room.subscribe(track.serverId);
+        const track = await room.subscribe(trackInfo.serverId);
         
-        track.on();
+        track.on("ready", () => {
+          const element = track.attach();
+          videoContainer.appendChild(element);
+        });
         
-      })
+        room.on("removetrack", event => {
+          if(!event.track) {
+            return;
+          }
+          
+          const elements = event.track.detach();
+          
+        });
+        
+      });
+      
+      
       
       room.publish(localTrack);
     },
