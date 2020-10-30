@@ -24,6 +24,7 @@ const vm = new Vue({
     if (roomId) {
       this.roomId = roomId;
       this.joinRoom();
+      console.log(roomId);
     }
   },
   methods: {
@@ -112,7 +113,7 @@ const vm = new Vue({
       await this.publishVideo();
     },
     joinRoom: async function(showPrompt = false) {
-      if (!showPrompt) {
+      if (showPrompt) {
         const roomId = prompt("Paste room Id here");
         if (!roomId) {
           return;
@@ -120,7 +121,7 @@ const vm = new Vue({
         this.roomId = roomId;
       }
 
-      const roomToken = await api.getRoomToken(roomId);
+      const roomToken = await api.getRoomToken(this.roomId);
       this.roomToken = roomToken;
 
       await this.login();
