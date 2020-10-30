@@ -23,7 +23,7 @@
   <body>
     <div class="container has-text-centered" id="app">
       <h1 class="title">
-        Ứng dụng Clone Zoom cực cool ngầu với
+        Clone Zoom Testing using Stringee
         <span class="header-highlight">Stringee API</span>
       </h1>
 
@@ -31,19 +31,18 @@
         <button class="button is-small is-primary" @click="createRoom">
           Create Room
         </button>
-        
+
         <button class="button is-small is-warning" @click="joinRoom">
           Join Room
-        </button> 
+        </button>
       </div>
-      
+
       <div v-if="roomId">
         <p>
-          Send this link to invitee <a v-bind:href="roomURL" target="_blank">{{roomURL}}</a>
+          Send this link to invitee
+          <a v-bind:href="roomURL" target="_blank">{{roomURL}}</a>
         </p>
-        <p>
-          <strong>Room ID: </strong>{{roomId}}
-        </p>
+        <p><strong>Room ID: </strong>{{roomId}}</p>
       </div>
     </div>
 
