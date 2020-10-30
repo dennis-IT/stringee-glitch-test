@@ -16,6 +16,15 @@ const vm = new Vue({
   },
   mounted() {
     api.setRestToken();
+
+    //Extract roomID from URL
+    const urlParams = new URLSearchParams(location.search);
+    const roomId = urlParams.get("room");
+
+    if (roomId) {
+      this.roomId = roomId;
+      this.joinRoom();
+    }
   },
   methods: {
     login: function() {
@@ -102,15 +111,16 @@ const vm = new Vue({
       await this.login();
       await this.publishVideo();
     },
-    joinRoom: async function() {
-      const roomId = prompt("Paste room Id here");
-
-      if (!roomId) {
-        return;
+    joinRoom: async function(showPrompt = false) {
+      if (!showPrompt) {
+        const roomId = prompt("Paste room Id here");
+        if (!roomId) {
+          return;
+        }
+        this.roomId = roomId;
       }
 
       const roomToken = await api.getRoomToken(roomId);
-      this.roomId = roomId;
       this.roomToken = roomToken;
 
       await this.login();
